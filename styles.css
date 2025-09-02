@@ -470,6 +470,7 @@ s Section */
     transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     opacity: 0;
     visibility: hidden;
+    display: none;
 }
 
 .cake-menu.active {
@@ -621,11 +622,27 @@ s Section */
     opacity: 0;
     visibility: hidden;
     transition: all 0.3s ease;
+    display: none;
 }
 
 .cake-overlay.active {
     opacity: 1;
     visibility: visible;
+}
+
+/* Desktop - Hide cake menu completely */
+@media (min-width: 769px) {
+    .cake-menu-toggle {
+        display: none !important;
+    }
+    
+    .cake-menu {
+        display: none !important;
+    }
+    
+    .cake-overlay {
+        display: none !important;
+    }
 }
 
 /* Responsive Design */
@@ -642,18 +659,16 @@ s Section */
         display: flex;
     }
     
+    .cake-menu {
+        display: block;
+    }
+    
+    .cake-overlay {
+        display: block;
+    }
+    
     .nav-menu {
-        position: fixed;
-        left: -100%;
-        top: 70px;
-        flex-direction: column;
-        background-color: white;
-        width: 100%;
-        text-align: center;
-        transition: 0.3s;
-        box-shadow: 0 10px 27px rgba(0,0,0,0.05);
-        padding: 20px 0;
-        gap: 0;
+        display: none;
     }
     
     .nav-menu.active {
