@@ -3,6 +3,25 @@ document.addEventListener('DOMContentLoaded', function() {
     const langButtons = document.querySelectorAll('.lang-btn');
     const elementsWithLang = document.querySelectorAll('[data-de][data-en]');
     
+    // Mobile menu elements and functions
+    const mobileToggle = document.querySelector('.mobile-menu-toggle');
+    const mobileMenu = document.querySelector('.mobile-menu');
+    const mobileOverlay = document.querySelector('.mobile-overlay');
+    
+    function closeMobileMenu() {
+        if (mobileToggle) mobileToggle.classList.remove('active');
+        if (mobileMenu) mobileMenu.classList.remove('active');
+        if (mobileOverlay) mobileOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+    
+    function toggleMobileMenu() {
+        if (mobileToggle) mobileToggle.classList.toggle('active');
+        if (mobileMenu) mobileMenu.classList.toggle('active');
+        if (mobileOverlay) mobileOverlay.classList.toggle('active');
+        document.body.style.overflow = mobileMenu && mobileMenu.classList.contains('active') ? 'hidden' : '';
+    }
+    
     // Set default language to German
     let currentLang = 'de';
     
@@ -70,26 +89,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Mobile menu
-    const mobileToggle = document.querySelector('.mobile-menu-toggle');
-    const mobileMenu = document.querySelector('.mobile-menu');
-    const mobileOverlay = document.querySelector('.mobile-overlay');
-    
-    function closeMobileMenu() {
-        if (mobileToggle) mobileToggle.classList.remove('active');
-        if (mobileMenu) mobileMenu.classList.remove('active');
-        if (mobileOverlay) mobileOverlay.classList.remove('active');
-        document.body.style.overflow = '';
-    }
-    
-    function toggleMobileMenu() {
-        if (mobileToggle) mobileToggle.classList.toggle('active');
-        if (mobileMenu) mobileMenu.classList.toggle('active');
-        if (mobileOverlay) mobileOverlay.classList.toggle('active');
-        document.body.style.overflow = mobileMenu && mobileMenu.classList.contains('active') ? 'hidden' : '';
-    }
-    
-    // Add event listeners
+    // Add event listeners for mobile menu
     if (mobileToggle) {
         mobileToggle.addEventListener('click', function(e) {
             e.preventDefault();
@@ -100,8 +100,6 @@ document.addEventListener('DOMContentLoaded', function() {
     if (mobileOverlay) {
         mobileOverlay.addEventListener('click', closeMobileMenu);
     }
-    
-
     
     // Handle mobile menu language buttons
     const langBtnsMobile = document.querySelectorAll('.mobile-language-switcher .lang-btn');
