@@ -40,12 +40,16 @@ document.addEventListener('DOMContentLoaded', function() {
         document.title = titles[lang];
     }
     
-    // Smooth scrolling for navigation links
+    // Smooth scrolling for all navigation links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
             const target = document.querySelector(this.getAttribute('href'));
             if (target) {
+                // Close mobile menu if it's a mobile menu link
+                if (this.closest('.mobile-menu-list')) {
+                    closeMobileMenu();
+                }
                 target.scrollIntoView({
                     behavior: 'smooth',
                     block: 'start'
@@ -66,56 +70,61 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Mobile cake menu
-    const cakeToggle = document.querySelector('.cake-menu-toggle');
-    const cakeMenu = document.querySelector('.cake-menu');
-    const cakeOverlay = document.querySelector('.cake-overlay');
+    // Mobile menu
+    const mobileToggle = document.querySelector('.mobile-menu-toggle');
+    const mobileMenu = document.querySelector('.mobile-menu');
+    const mobileOverlay = document.querySelector('.mobile-overlay');
     
-    function toggleCakeMenu() {
-        cakeToggle.classList.toggle('active');
-        cakeMenu.classList.toggle('active');
-        cakeOverlay.classList.toggle('active');
-        document.body.style.overflow = cakeMenu.classList.contains('active') ? 'hidden' : '';
-    }
-    
-    function closeCakeMenu() {
-        cakeToggle.classList.remove('active');
-        cakeMenu.classList.remove('active');
-        cakeOverlay.classList.remove('active');
+    function closeMobileMenu() {
+        if (mobileToggle) mobileToggle.classList.remove('active');
+        if (mobileMenu) mobileMenu.classList.remove('active');
+        if (mobileOverlay) mobileOverlay.classList.remove('active');
         document.body.style.overflow = '';
     }
     
-    if (cakeToggle) {
-        cakeToggle.addEventListener('click', toggleCakeMenu);
+    function toggleMobileMenu() {
+        if (mobileToggle) mobileToggle.classList.toggle('active');
+        if (mobileMenu) mobileMenu.classList.toggle('active');
+        if (mobileOverlay) mobileOverlay.classList.toggle('active');
+        document.body.style.overflow = mobileMenu && mobileMenu.classList.contains('active') ? 'hidden' : '';
     }
     
-    if (cakeOverlay) {
-        cakeOverlay.addEventListener('click', closeCakeMenu);
-    }
-    
-    // Close cake menu when clicking on a link
-    document.querySelectorAll('.cake-slice a').forEach(link => {
-        link.addEventListener('click', function() {
-            closeCakeMenu();
+    // Add event listeners
+    if (mobileToggle) {
+        mobileToggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            toggleMobileMenu();
         });
-    });
+    }
     
-    // Handle cake menu language buttons
-    const langBtnsCake = document.querySelectorAll('.language-slice .lang-btn');
-    langBtnsCake.forEach(button => {
-        button.addEventListener('click', function() {
-            const lang = this.id.split('-')[1]; // Extract 'de' or 'en'
+    if (mobileOverlay) {
+        mobileOverlay.addEventListener('click', closeMobileMenu);
+    }
+    
+
+    
+    // Handle mobile menu language buttons
+    const langBtnsMobile = document.querySelectorAll('.mobile-language-switcher .lang-btn');
+    
+    langBtnsMobile.forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const lang = this.id.split('-')[2]; // Extract 'de' or 'en' from 'lang-de-mobile'
             switchLanguage(lang);
             
-            // Update cake menu language buttons
-            langBtnsCake.forEach(btn => btn.classList.remove('active'));
+            // Update mobile menu language buttons
+            langBtnsMobile.forEach(btn => btn.classList.remove('active'));
             this.classList.add('active');
             
             // Update main language buttons too
-            langButtons.forEach(btn => btn.classList.remove('active'));
-            document.getElementById(`lang-${lang}`).classList.add('active');
-            
-            closeCakeMenu();
+            const mainLangButtons = document.querySelectorAll('.language-switcher .lang-btn');
+            mainLangButtons.forEach(btn => btn.classList.remove('active'));
+            const mainBtn = document.getElementById(`lang-${lang}`);
+            if (mainBtn) {
+                mainBtn.classList.add('active');
+            }
         });
     });
 });
