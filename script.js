@@ -66,20 +66,56 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Mobile hamburger menu
-    const hamburger = document.querySelector('.hamburger');
-    const navMenu = document.querySelector('.nav-menu');
+    // Mobile cake menu
+    const cakeToggle = document.querySelector('.cake-menu-toggle');
+    const cakeMenu = document.querySelector('.cake-menu');
+    const cakeOverlay = document.querySelector('.cake-overlay');
     
-    hamburger.addEventListener('click', function() {
-        hamburger.classList.toggle('active');
-        navMenu.classList.toggle('active');
+    function toggleCakeMenu() {
+        cakeToggle.classList.toggle('active');
+        cakeMenu.classList.toggle('active');
+        cakeOverlay.classList.toggle('active');
+        document.body.style.overflow = cakeMenu.classList.contains('active') ? 'hidden' : '';
+    }
+    
+    function closeCakeMenu() {
+        cakeToggle.classList.remove('active');
+        cakeMenu.classList.remove('active');
+        cakeOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+    
+    if (cakeToggle) {
+        cakeToggle.addEventListener('click', toggleCakeMenu);
+    }
+    
+    if (cakeOverlay) {
+        cakeOverlay.addEventListener('click', closeCakeMenu);
+    }
+    
+    // Close cake menu when clicking on a link
+    document.querySelectorAll('.cake-slice a').forEach(link => {
+        link.addEventListener('click', function() {
+            closeCakeMenu();
+        });
     });
     
-    // Close mobile menu when clicking on a link
-    document.querySelectorAll('.nav-menu a').forEach(link => {
-        link.addEventListener('click', function() {
-            hamburger.classList.remove('active');
-            navMenu.classList.remove('active');
+    // Handle cake menu language buttons
+    const langBtnsCake = document.querySelectorAll('.language-slice .lang-btn');
+    langBtnsCake.forEach(button => {
+        button.addEventListener('click', function() {
+            const lang = this.id.split('-')[1]; // Extract 'de' or 'en'
+            switchLanguage(lang);
+            
+            // Update cake menu language buttons
+            langBtnsCake.forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+            
+            // Update main language buttons too
+            langButtons.forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`lang-${lang}`).classList.add('active');
+            
+            closeCakeMenu();
         });
     });
 });
