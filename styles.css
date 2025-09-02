@@ -421,11 +421,84 @@ s Section */
     opacity: 0.8;
 }
 
+/* Hamburger Menu */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.hamburger span {
+    width: 25px;
+    height: 3px;
+    background: #2c5aa0;
+    margin: 3px 0;
+    transition: 0.3s;
+    border-radius: 2px;
+}
+
+.hamburger.active span:nth-child(1) {
+    transform: rotate(-45deg) translate(-5px, 6px);
+}
+
+.hamburger.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+    transform: rotate(45deg) translate(-5px, -6px);
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
+    .nav-container {
+        padding: 0 15px;
+    }
+    
+    .nav-logo h2 {
+        font-size: 1.2rem;
+    }
+    
+    .hamburger {
+        display: flex;
+    }
+    
     .nav-menu {
-        gap: 15px;
-        font-size: 0.9rem;
+        position: fixed;
+        left: -100%;
+        top: 70px;
+        flex-direction: column;
+        background-color: white;
+        width: 100%;
+        text-align: center;
+        transition: 0.3s;
+        box-shadow: 0 10px 27px rgba(0,0,0,0.05);
+        padding: 20px 0;
+        gap: 0;
+    }
+    
+    .nav-menu.active {
+        left: 0;
+    }
+    
+    .nav-menu li {
+        margin: 15px 0;
+    }
+    
+    .nav-menu a {
+        font-size: 1.1rem;
+        padding: 10px;
+        display: block;
+    }
+    
+    .language-switcher {
+        margin-top: 20px;
+        justify-content: center;
+    }
+    
+    .hero {
+        padding: 100px 0 60px;
     }
     
     .hero h1 {
@@ -460,23 +533,54 @@ s Section */
 
 @media (max-width: 480px) {
     .nav-container {
-        padding: 0 15px;
+        padding: 0 10px;
+        height: 60px;
+    }
+    
+    .nav-logo h2 {
+        font-size: 1rem;
+    }
+    
+    .hamburger {
+        padding: 2px;
+    }
+    
+    .hamburger span {
+        width: 20px;
+        height: 2px;
     }
     
     .nav-menu {
-        gap: 10px;
-        font-size: 0.8rem;
+        top: 60px;
+    }
+    
+    .nav-menu a {
+        font-size: 1rem;
+        padding: 8px;
     }
     
     .hero {
-        padding: 100px 0 60px;
+        padding: 80px 0 50px;
     }
     
     .hero h1 {
-        font-size: 1.8rem;
+        font-size: 1.6rem;
+        line-height: 1.2;
+    }
+    
+    .hero p {
+        font-size: 1rem;
     }
     
     .services, .prices, .about, .contact {
-        padding: 60px 0;
+        padding: 50px 0;
+    }
+    
+    .services h2, .prices h2, .about h2, .contact h2 {
+        font-size: 2rem;
+    }
+    
+    .service-card, .price-card {
+        padding: 30px 20px;
     }
 }
