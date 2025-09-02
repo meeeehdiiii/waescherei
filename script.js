@@ -34,8 +34,8 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Update page title
         const titles = {
-            de: 'Wäscherei München - Professionelle Wäscherei Services',
-            en: 'Laundry Munich - Professional Laundry Services'
+            de: 'Wäscherei Neuhausen - Professionelle Wäscherei Services',
+            en: 'Laundry Neuhausen - Professional Laundry Services'
         };
         document.title = titles[lang];
     }

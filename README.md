@@ -1,6 +1,6 @@
-# Wäscherei München Website
+# Wäscherei Neuhausen Website
 
-A simple, professional static website for a laundry business in Munich, Germany.
+A simple, professional static website for a laundry business in Neuhausen, Germany.
 
 ## Features
 
